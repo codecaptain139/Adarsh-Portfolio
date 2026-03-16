@@ -6,6 +6,11 @@
 
 body{
     font-family: 'Inter', sans-serif;
+    background-color:#ffffff;
+}
+
+html{
+    scroll-behavior: smooth; /*Now clicking navbar links will smooth scroll instead of jumping.*/
 }
 
 :root{
@@ -14,37 +19,76 @@ body{
     --muted-text: #777;
 }
 
+/* HERO GRID LAYOUT
+
+display:grid makes .hero a grid container.
+
+grid-template-columns:60% 40%
+→ two columns
+→ left column gets 60% width
+→ right column gets 40% width
+
+grid-template-rows:auto 1fr
+
+auto
+→ height based on content (navbar height)
+
+1fr
+→ remaining available space of container
+
+Navbar spans across both columns using:
+grid-column:1/3
+
+Layout becomes:
+
+Row1 → navbar (full width)
+
+Row2 → hero-content | hero-image
+
+*/
+
 .hero{
     display:grid;
     grid-template-columns: 60% 40%;
-    grid-template-rows: auto 1fr;
     min-height:100vh;
 }
 
 .hero-content{
-    /* border: 5px solid red; */
     display: flex;
     flex-direction: column;
     gap: 20px;
-    padding: 60px;
+    padding: 150px 60px 60px 60px;
     justify-content: center;
 }
 
+/* STICKY NAVBAR
+
+position:sticky keeps navbar fixed
+when scrolling reaches top.
+
+top:0
+means stick to top of viewport.
+
+z-index:10
+ensures navbar stays above particles and other elements.
+*/
+
 .navbar{
-    grid-column: 1 / 3;
     padding: 20px 60px;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background-color: white;
+    z-index: 10;
 }
 
 nav ul{
-    /* border: 1px solid hotpink; */
     display: flex;
     list-style: none;
     gap: 20px;
-    /* justify-content: flex-end; */
 }
 
 nav ul li{
-    /* border: 1px solid green; */
     font-weight: 500;
     cursor: pointer;
     color: var(--secondary-text);
@@ -61,7 +105,7 @@ nav ul li::after{
     width: 0;
     height: 2px;
     background: var(--primary-text);
-    transition: width 2s ease;
+    transition: width 0.25s ease;
 }
 
 nav ul li:hover::after{
@@ -72,16 +116,22 @@ nav ul li:hover{
     color: var(--primary-text);
 }
 
+nav ul li a{
+    font-size: 18px;
+    text-decoration: none;
+    color: inherit;
+}
+
 .hero-stats{
     display: flex;
     gap: 40px;
 }
 
 .hero-image{
-    /* border: 3px solid green; */
     display: flex;
     justify-content: center;
     align-items: center;
+    padding-top: 150px;
 }
 
 .hero-image img{
@@ -90,7 +140,6 @@ nav ul li:hover{
     height: auto;
     display: block;
     border-radius: 12px;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
 }
 
 .hero-content h1{
@@ -106,8 +155,13 @@ nav ul li:hover{
     color: var(--primary-text);
 }
 
+.typing{
+    font-size: 20px;
+    font-weight: 500;
+    color: var(--secondary-text);
+}
+
 .hero-content p{
-    /* border: 1px solid red; */
     font-size: 18px;
     color: var(--secondary-text);
     margin-top: 6px;
@@ -128,29 +182,20 @@ nav ul li:hover{
     line-height: 1.2;
     display: flex;
     flex-direction: column;
-    /* border: 2px solid green; */
-}
-
-.skills{
-    /* border: 2px solid blue; */
-    padding: 20px;
 }
 
 .skills-title{
-    /* border: 2px solid green; */
     font-size: 32px;
     margin-bottom: 45px;
 }
 
 .skills-grid{
-    /* border: 2px solid red; */
     display: grid;
-    grid-template-columns: repeat(3, 1fr); /*repeat is a function in CSS which takes 2 arguments 1st one is how many columns you have to make and second one is how much width you have to make the columns.*/
+    grid-template-columns: repeat(3, 1fr);
     gap: 20px;
 }
 
 .skill-card{
-    /* border: 1px solid green; */
     padding: 20px;
     border-radius: 8px;
     background: #f5f5f5;
@@ -161,5 +206,136 @@ nav ul li:hover{
 
 .skill-card:hover{
     transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(0 ,0 ,0 ,0.5);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+}
+
+.projects-title{
+    font-size: 32px;
+    margin-bottom: 20px;
+}
+
+.project-card{
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    background-color: #f5f5f5;
+    border-radius: 10px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    gap: 20px;
+}
+
+.project-card:hover{
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12);
+}
+
+.project-card h3{
+    font-size: 22px;
+    color: var(--primary-text);
+}
+
+.project-card p{
+    color: var(--secondary-text);
+    line-height: 1.5;
+}
+
+.project-tech{
+    font-size: 14px;
+    color: var(--muted-text);
+}
+
+.project-links{
+    margin-top: auto;
+    display: flex;
+    gap: 20px;
+}
+
+/* 1fr = one fraction of available space
+
+Example:
+container width = 1000px
+
+grid-template-columns: 1fr 1fr
+
+Column1 = 500px
+Column2 = 500px
+
+fr divides remaining space proportionally.
+*/
+
+.projects-grid{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 40px;
+}
+
+.project-links a{
+    background-color: #444;
+    color: white;
+    text-decoration: none;
+    padding: 10px 16px;
+    font-size: 14px;
+    border-radius: 10px;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.project-links a:hover{
+    background-color: #111;
+    transform: translateY(-1px);
+}
+
+.section{
+    padding: 80px 60px;
+}
+
+.about p{
+    max-width: 650px;
+    line-height: 1.7;
+}
+
+.about ul{
+    margin-top: 20px;
+    line-height: 1.8;
+}
+
+.contact{
+    background-color: #111;
+    color: white;
+    text-align: center;
+}
+
+.contact a{
+    color: #ccc;
+}
+
+#particles{
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: -1;
+}
+
+@media (max-width: 768px){
+    /*Stacks hero vertically on mobile*/
+    .hero{
+        grid-template-columns: 1fr;
+    }
+
+    /*Hide images on small screen*/
+
+    .hero-image img{
+        max-width: 200px;
+    }
+
+    .skills-grid,
+    .projects-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .hero-content,
+    .section {
+    padding: 40px 24px;
+    }
 }
